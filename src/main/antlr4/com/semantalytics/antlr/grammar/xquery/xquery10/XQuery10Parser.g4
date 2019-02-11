@@ -1,6 +1,7 @@
-parser grammar XQueryParser;
+parser grammar XQuery10Parser;
+
 options {
-  tokenVocab=XQueryLexer;
+  tokenVocab=XQuery10Lexer;
 }
 
 // Mostly taken from http://www.w3.org/TR/xquery/#id-grammar, with some
