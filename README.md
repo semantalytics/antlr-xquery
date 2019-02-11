@@ -1,1 +1,1 @@
-# antlr-sparql
+# antlr-xquery
