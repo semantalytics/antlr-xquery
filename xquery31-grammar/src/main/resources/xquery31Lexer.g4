@@ -4,6 +4,7 @@ import xcore;
 
 // XQuery 3.1 grammar, adapted from the original grammar @ https://www.w3.org/TR/xquery-3/#nt-bnf
 
+/* [7] */
 Separator
     : ';'
     ;                                // Terminal rule

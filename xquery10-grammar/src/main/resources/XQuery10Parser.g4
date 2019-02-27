@@ -17,27 +17,39 @@ options {
 
 // MODULE HEADER ///////////////////////////////////////////////////////////////
 
-module: versionDecl? (libraryModule | mainModule) ;
+module
+    : versionDecl? (libraryModule | mainModule)
+    ;
 
-versionDecl: 'xquery' 'version' version=stringLiteral
-             ('encoding' encoding=stringLiteral)?
-             ';' ;
+versionDecl
+    : KW_XQUERY KW_VERSION version=stringLiteral (KW_ENCODING encoding=stringLiteral)? SEMICOLON
+    ;
 
-mainModule: prolog expr;
+mainModule
+    : prolog expr
+    ;
 
-libraryModule: moduleDecl prolog;
+libraryModule
+    : moduleDecl prolog
+    ;
 
-moduleDecl: 'module' 'namespace' prefix=ncName '=' uri=stringLiteral ';' ;
+moduleDecl
+    : 'module' 'namespace' prefix=ncName '=' uri=stringLiteral ';'
+    ;
 
 // MODULE PROLOG ///////////////////////////////////////////////////////////////
 
-prolog: ((defaultNamespaceDecl | setter | namespaceDecl | schemaImport | moduleImport) ';')*
-        ((varDecl | functionDecl | optionDecl) ';')* ;
+prolog
+    : ((defaultNamespaceDecl | setter | namespaceDecl | schemaImport | moduleImport) ';')*
+        ((varDecl | functionDecl | optionDecl) ';')*
+    ;
 
-defaultNamespaceDecl: 'declare' 'default'
+defaultNamespaceDecl
+    : 'declare' 'default'
                       type=('element' | 'function')
                       'namespace'
-                      uri=stringLiteral;
+                      uri=stringLiteral
+    ;
 
 setter: 'declare' 'boundary-space' type=('preserve' | 'strip')          # boundaryDecl
       | 'declare' 'default' 'collation' stringLiteral                   # defaultCollationDecl
@@ -51,41 +63,63 @@ setter: 'declare' 'boundary-space' type=('preserve' | 'strip')          # bounda
                   inherit=('inherit' | 'no-inherit')                    # copyNamespacesDecl
       ;
 
-namespaceDecl: 'declare' 'namespace' prefix=ncName '=' uri=stringLiteral ;
+namespaceDecl
+    : 'declare' 'namespace' prefix=ncName '=' uri=stringLiteral
+    ;
 
-schemaImport: 'import' 'schema'
+schemaImport
+    : 'import' 'schema'
               ('namespace' prefix=ncName '=' | 'default' 'element' 'namespace')?
               nsURI=stringLiteral
-              ('at' locations+=stringLiteral (',' locations+=stringLiteral)*)? ;
+              ('at' locations+=stringLiteral (',' locations+=stringLiteral)*)?
+    ;
 
-moduleImport: 'import' 'module'
+moduleImport
+    : 'import' 'module'
               ('namespace' prefix=ncName '=')?
               nsURI=stringLiteral
-              ('at' locations+=stringLiteral (',' locations+=stringLiteral)*)? ;
+              ('at' locations+=stringLiteral (',' locations+=stringLiteral)*)?
+    ;
 
-varDecl: 'declare' 'variable' '$' name=qName type=typeDeclaration?
-         (':=' value=exprSingle | 'external') ;
+varDecl
+    : 'declare' 'variable' '$' name=qName type=typeDeclaration?
+         (':=' value=exprSingle | 'external')
+    ;
 
-functionDecl: 'declare' 'function' name=qName '(' (params+=param (',' params+=param)*)? ')'
+functionDecl
+    : 'declare' 'function' name=qName '(' (params+=param (',' params+=param)*)? ')'
               ('as' type=sequenceType)?
-              ('{' body=expr '}' | 'external') ;
+              ('{' body=expr '}' | 'external')
+    ;
 
-optionDecl: 'declare' 'option' name=qName value=stringLiteral ;
+optionDecl
+    : 'declare' 'option' name=qName value=stringLiteral
+    ;
 
-param: '$' name=qName type=typeDeclaration? ;
+param
+    : '$' name=qName type=typeDeclaration?
+    ;
 
 // EXPRESSIONS /////////////////////////////////////////////////////////////////
 
-expr: exprSingle (',' exprSingle)* ;
+expr
+    : exprSingle (COMMA exprSingle)*
+    ;
 
-exprSingle: flworExpr | quantifiedExpr | typeswitchExpr | ifExpr | orExpr ;
+exprSingle
+    : flworExpr
+    | quantifiedExpr
+    | typeswitchExpr
+    | ifExpr
+    | orExpr
+    ;
 
 flworExpr: (forClause | letClause)+
            ('where' whereExpr=exprSingle)?
            orderByClause?
            'return' returnExpr=exprSingle ;
 
-forClause: 'for' vars+=forVar (',' vars+=forVar)* ;
+forClause: 'for' vars+=forVar (COMMA vars+=forVar)* ;
 
 forVar: '$' name=qName type=typeDeclaration? ('at' '$' pvar=qName)?
         'in' in=exprSingle ;

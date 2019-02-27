@@ -10,31 +10,37 @@ xquery31
     : module EOF?
     ;
 
+/* [1] */
 module
     : versionDecl? (libraryModule | mainModule)
     ;
 
+/* [2] */
 versionDecl
     : 'xquery' (('encoding' StringLiteral) | ('version' StringLiteral ('encoding' StringLiteral)?)) Separator
     ;
 
+/* [3] */
 mainModule
     : prolog queryBody
     ;
-
+/* [4] */
 libraryModule
     : moduleDecl prolog
     ;
 
+/* [5] */
 moduleDecl
     : 'module' 'namespace' ncName '=' uriLiteral Separator
     ;
 
+/* [6] */
 prolog
     : ((defaultNamespaceDecl | setter | namespaceDecl | importGeneral) Separator)*
       ((contextItemDecl | annotatedDecl | optionDecl) Separator)*
     ;
 
+/* [8] */
 setter
     : BoundarySpaceDecl
     | defaultCollationDecl
@@ -46,16 +52,20 @@ setter
     | decimalFormatDecl
     ;
 
+/* [10] */
 defaultCollationDecl
     : 'declare' 'default' 'collation' uriLiteral ;
 
+/* [11] */
 baseURIDecl
     : 'declare' 'base-uri' uriLiteral ;
 
+/* [15] */
 copyNamespacesDecl
     : 'declare' 'copy-namespaces' PreserveMode ',' InheritMode
     ;
 
+/* [18] */
 decimalFormatDecl
     : 'declare' (('decimal-format' eqName)
     | ('default' 'decimal-format')) (DfPropertyName '=' StringLiteral)*

@@ -18,6 +18,7 @@ The grammar of XQuery 3.1 uses the same simple Extended Backus-Naur Form (EBNF) 
 The terminal symbols for this grammar include the quoted strings used in the production rules below, and the terminal symbols defined in section A.2.1 Terminal Symbols.
 
 The EBNF notation is described in more detail in A.1.1 Notation.
+
 [1]    	Module 	   ::=    	VersionDecl? (LibraryModule | MainModule) 	
 [2]    	VersionDecl 	   ::=    	"xquery" (("encoding" StringLiteral) | ("version" StringLiteral ("encoding" StringLiteral)?)) Separator 	
 [3]    	MainModule 	   ::=    	Prolog QueryBody 	
