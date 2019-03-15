@@ -268,8 +268,8 @@ orderSpec
 
 orderModifier
     : ('ascending' | 'descending')?
-        ('empty' ('greatest' | 'least'))?
-        ('collation' uriLiteral)?
+      ('empty' ('greatest' | 'least'))?
+      ('collation' uriLiteral)?
     ;
 
 returnClause
@@ -277,11 +277,10 @@ returnClause
     ;
 
 quantifiedExpr
-    :
-        ('some' | 'every') '$' varName typeDeclaration?
-        'in' exprSingle
-        (',' '$' varName typeDeclaration? 'in' exprSingle)*
-        'satisfies' exprSingle
+    : ('some' | 'every') '$' varName typeDeclaration?
+       'in' exprSingle
+      (',' '$' varName typeDeclaration? 'in' exprSingle)*
+       'satisfies' exprSingle
     ;
 
 switchExpr
@@ -298,153 +297,200 @@ switchCaseOperand
 
 typeswitchExpr
     : 'typeswitch' '(' expr ')' caseClause+ 'default' ('$' varName)?
-        'return' exprSingle ;
+        'return' exprSingle
+    ;
 
 caseClause
-    : 'case' ('$' varName 'as')? sequenceTypeUnion 'return' exprSingle ;
+    : 'case' ('$' varName 'as')? sequenceTypeUnion 'return' exprSingle
+    ;
 
 sequenceTypeUnion
-    : sequenceType ('|' sequenceType)* ;
+    : sequenceType ('|' sequenceType)*
+    ;
 
 ifExpr
-    : 'if' '(' expr ')' 'then' exprSingle 'else' exprSingle ;
+    : 'if' '(' expr ')' 'then' exprSingle 'else' exprSingle
+    ;
 
 tryCatchExpr
-    : tryClause catchClause+ ;
+    : tryClause catchClause+
+    ;
 
 tryClause
-    : 'try' enclosedTryTargetExpr ;
+    : 'try' enclosedTryTargetExpr
+    ;
 
 enclosedTryTargetExpr
-    : enclosedExpr ;
+    : enclosedExpr
+    ;
 
 catchClause
-    : 'catch' catchErrorList enclosedExpr ;
+    : 'catch' catchErrorList enclosedExpr
+    ;
 
 catchErrorList
-    : nameTest ('|' nameTest)* ;
+    : nameTest ('|' nameTest)*
+    ;
 
 orExpr
-    : andExpr ( 'or' andExpr )* ;
+    : andExpr ( 'or' andExpr )*
+    ;
 
 andExpr
-    : comparisonExpr ( 'and' comparisonExpr )* ;
+    : comparisonExpr ( 'and' comparisonExpr )*
+    ;
 
 comparisonExpr
-    : stringConcatExpr ((ValueComp| GeneralComp| NodeComp) stringConcatExpr)? ;
+    : stringConcatExpr ((ValueComp| GeneralComp| NodeComp) stringConcatExpr)?
+    ;
 
 stringConcatExpr
-    : rangeExpr ( '||' rangeExpr )* ;
+    : rangeExpr ( '||' rangeExpr )*
+    ;
 
 rangeExpr
-    : additiveExpr ( 'to' additiveExpr )? ;
+    : additiveExpr ( 'to' additiveExpr )?
+    ;
 
 additiveExpr
-    : multiplicativeExpr ( ('+' | '-') multiplicativeExpr )* ;
+    : multiplicativeExpr ( ('+' | '-') multiplicativeExpr )*
+    ;
 
 multiplicativeExpr
-    : unionExpr ( ('*' | 'div' | 'idiv' | 'mod') unionExpr )* ;
+    : unionExpr ( ('*' | 'div' | 'idiv' | 'mod') unionExpr )*
+    ;
 
 unionExpr
-    : intersectExceptExpr ( ('union' | '|') intersectExceptExpr )* ;
+    : intersectExceptExpr ( ('union' | '|') intersectExceptExpr )*
+    ;
 
 intersectExceptExpr
-    : instanceofExpr ( ('intersect' | 'except') instanceofExpr )* ;
+    : instanceofExpr ( ('intersect' | 'except') instanceofExpr )*
+    ;
 
 instanceofExpr
-    : treatExpr ( 'instance' 'of' sequenceType )? ;
+    : treatExpr ( 'instance' 'of' sequenceType )?
+    ;
 
 treatExpr
-    : castableExpr ( 'treat' 'as' sequenceType )? ;
+    : castableExpr ( 'treat' 'as' sequenceType )?
+    ;
 
 castableExpr
-    : castExpr ( 'castable' 'as' singleType )? ;
+    : castExpr ( 'castable' 'as' singleType )?
+    ;
 
 castExpr
-    : arrowExpr ( 'cast' 'as' singleType )? ;
+    : arrowExpr ( 'cast' 'as' singleType )?
+    ;
 
 arrowExpr
-    : unaryExpr ( '=>' arrowFunctionSpecifier argumentList )* ;
+    : unaryExpr ( '=>' arrowFunctionSpecifier argumentList )*
+    ;
 
 unaryExpr
-    : ('-' | '+')* valueExpr ;
+    : ('-' | '+')* valueExpr
+    ;
 
 valueExpr
-    : validateExpr | extensionExpr | simpleMapExpr ;
+    : validateExpr | extensionExpr | simpleMapExpr
+    ;
 
 validateExpr
-    : 'validate' (ValidationMode | ('type' typeName))? enclosedExpr ;
+    : 'validate' (ValidationMode | ('type' typeName))? enclosedExpr
+    ;
 
 extensionExpr
-    : pragma+ enclosedExpr ;
+    : pragma+ enclosedExpr
+    ;
 
 pragma
-    : '(#' S? eqName (S pragmaContents)? '#)'  /* ws: explicit */ ;
+    : '(#' S? eqName (S pragmaContents)? '#)'  /* ws: explicit */
+    ;
 
 // pragmaContents : (Char* ~ (Char* '#)' Char*)) ; // This is the original rule
 pragmaContents
-    : (Char* ~ PragmaContentsInternal) ;
+    : (Char* ~ PragmaContentsInternal)
+    ;
 
 simpleMapExpr
-    : pathExpr ('!' pathExpr)* ;
+    : pathExpr ('!' pathExpr)*
+    ;
 
 pathExpr
     : ('/' relativePathExpr?)
     | ('//' relativePathExpr)
     | relativePathExpr  /* xgc: leading-lone-slash */
+
     ;
 
 relativePathExpr
-    : stepExpr (('/' | '//') stepExpr)* ;
+    : stepExpr (('/' | '//') stepExpr)*
+    ;
 
 stepExpr
-    : postfixExpr | axisStep ;
+    : postfixExpr | axisStep
+    ;
 
 axisStep
-    : (reverseStep | forwardStep) predicateList ;
+    : (reverseStep | forwardStep) predicateList
+    ;
 
 forwardStep
-    : (ForwardAxis nodeTest) | abbrevForwardStep ;
+    : (ForwardAxis nodeTest) | abbrevForwardStep
+    ;
 
 abbrevForwardStep
-    : '@'? nodeTest ;
+    : '@'? nodeTest
+    ;
 
 reverseStep
-    : (ReverseAxis nodeTest) | AbbrevReverseStep ;
+    : (ReverseAxis nodeTest) | AbbrevReverseStep
+    ;
 
 nodeTest
-    : kindTest | nameTest ;
+    : kindTest | nameTest
+    ;
 
 nameTest
-    : eqName | wildcard ;
+    : eqName | wildcard
+    ;
 
 wildcard
     : '*'
     | (ncName ':' '*')
     | ('*' ':' ncName)
-    | (bracedURILiteral '*')  /* ws: explicit */ ;
+    | (bracedURILiteral '*')  /* ws: explicit */
+    ;
 
 postfixExpr
-    : primaryExpr (predicate | argumentList | lookup)* ;
+    : primaryExpr (predicate | argumentList | lookup)*
+    ;
 
 argumentList
-    : '(' (argument (',' argument)*)? ')' ;
+    : '(' (argument (',' argument)*)? ')'
+    ;
 
 predicateList
-    : predicate* ;
+    : predicate*
+    ;
 
 predicate
-    : '[' expr ']' ;
+    : '[' expr ']'
+    ;
 
 lookup
-    : '?' keySpecifier ;
+    : '?' keySpecifier
+    ;
 
 keySpecifier
     : ncName | IntegerLiteral | parenthesizedExpr | '*'
+
     ;
 
 arrowFunctionSpecifier
     : eqName | varRef | parenthesizedExpr
+
     ;
 
 primaryExpr
@@ -461,69 +507,87 @@ primaryExpr
     | arrayConstructor
     | stringConstructor
     | unaryLookup
+
     ;
 
 literal
     : numericLiteral
     | StringLiteral
+
     ;
 
 numericLiteral
     : IntegerLiteral
     | DecimalLiteral
     | DoubleLiteral
+
     ;
 
 varRef
-    : '$' varName ;
+    : '$' varName
+    ;
 
-varName : eqName ;
+varName : eqName
+    ;
 
 parenthesizedExpr
-    : '(' expr? ')' ;
+    : '(' expr? ')'
+    ;
 
 orderedExpr
-    : 'ordered' enclosedExpr ;
+    : 'ordered' enclosedExpr
+    ;
 
 unorderedExpr
-    : 'unordered' enclosedExpr ;
+    : 'unordered' enclosedExpr
+    ;
 
 functionCall
-    : eqName argumentList  /* xgc: reserved-function-names */ ;
+    : eqName argumentList  /* xgc: reserved-function-names */
+    ;
 
 /* gn: parens */
 argument
-    : exprSingle | ArgumentPlaceholder ;
+    : exprSingle | ArgumentPlaceholder
+    ;
 
 nodeConstructor
-    : directConstructor | computedConstructor ;
+    : directConstructor | computedConstructor
+    ;
 
 directConstructor
-    : dirElemConstructor | dirCommentConstructor | dirPIConstructor ;
+    : dirElemConstructor | dirCommentConstructor | dirPIConstructor
+    ;
 
 dirElemConstructor
     : '<' qName dirAttributeList
-        ('/>' | ('>' dirElemContent* '</' qName S? '>'))  /* ws: explicit */ ;
+        ('/>' | ('>' dirElemContent* '</' qName S? '>'))  /* ws: explicit */
+    ;
 
 dirAttributeList
     :
-        (S (qName S? '=' S? dirAttributeValue)?)*  /* ws: explicit */ ;
+        (S (qName S? '=' S? dirAttributeValue)?)*  /* ws: explicit */
+    ;
 
 dirAttributeValue
     : ('"'  (EscapeQuot | quotAttrValueContent)* '"')
-                  | ('\'' (EscapeApos | aposAttrValueContent)* '\'')  /* ws: explicit */ ;
+                  | ('\'' (EscapeApos | aposAttrValueContent)* '\'')  /* ws: explicit */
+    ;
 
 quotAttrValueContent
-    : QuotAttrContentChar | commonContent ;
+    : QuotAttrContentChar | commonContent
+    ;
 
 aposAttrValueContent
-    : AposAttrContentChar | commonContent ;
+    : AposAttrContentChar | commonContent
+    ;
 
 dirElemContent
     : directConstructor
     | cDataSection
     | commonContent
     | ElementContentChar
+
     ;
 
 commonContent
@@ -531,29 +595,36 @@ commonContent
     | CharRef
     | '{{' | '}}'
     | enclosedExpr
+
     ;
 
 dirCommentConstructor
-    : '<!--' dirCommentContents '-->'  /* ws: explicit */ ;
+    : '<!--' dirCommentContents '-->'  /* ws: explicit */
+    ;
 
 // dirCommentContents : ((Char - '-') | ('-' (Char - '-')))*  /* ws: explicit */ ; // This is the original rule
 dirCommentContents
-    : ((Char ~ '-') | ('-' (Char ~ '-')))*  /* ws: explicit */ ;
+    : ((Char ~ '-') | ('-' (Char ~ '-')))*  /* ws: explicit */
+    ;
 
 dirPIConstructor
-    : '<?' piTarget (S dirPIContents)? '?>'  /* ws: explicit */ ;
+    : '<?' piTarget (S dirPIContents)? '?>'  /* ws: explicit */
+    ;
 
 // dirPIContents : (Char* - (Char* '?>' Char*))  /* ws: explicit */ ;  // This is the original rule
 dirPIContents
-    : (Char* ~ DirPIContentsInternal)  /* ws: explicit */ ;
+    : (Char* ~ DirPIContentsInternal)  /* ws: explicit */
+    ;
 
 cDataSection
-    : '<![CDATA[' cDataSectionContents ']]>'  /* ws: explicit */ ;
+    : '<![CDATA[' cDataSectionContents ']]>'  /* ws: explicit */
+    ;
 
 // cDataSectionContents : (Char* - (Char* ']]>' Char*))  /* ws: explicit */ ; // This is the original rule
 
 cDataSectionContents
-    : (Char* ~ CDataSectionContentsInternal)  /* ws: explicit */ ;
+    : (Char* ~ CDataSectionContentsInternal)  /* ws: explicit */
+    ;
 
 computedConstructor
     : compDocConstructor
@@ -563,103 +634,134 @@ computedConstructor
     | compTextConstructor
     | compCommentConstructor
     | compPIConstructor
+
     ;
 
 compDocConstructor
-    : 'document' enclosedExpr ;
+    : 'document' enclosedExpr
+    ;
 
 compElemConstructor
-    : 'element' (eqName | ('{' expr '}')) enclosedContentExpr ;
+    : 'element' (eqName | ('{' expr '}')) enclosedContentExpr
+    ;
 
 enclosedContentExpr
-    : enclosedExpr ;
+    : enclosedExpr
+    ;
 
 compAttrConstructor
-    : 'attribute' (eqName | ('{' expr '}')) enclosedExpr ;
+    : 'attribute' (eqName | ('{' expr '}')) enclosedExpr
+    ;
 
 compNamespaceConstructor
     : 'namespace' (prefix | enclosedPrefixExpr) enclosedURIExpr
+
     ;
 
 prefix
-    : ncName ;
+    : ncName
+    ;
 
 enclosedPrefixExpr
-    : enclosedExpr ;
+    : enclosedExpr
+    ;
 
 enclosedURIExpr
-    : enclosedExpr ;
+    : enclosedExpr
+    ;
 
 compTextConstructor
-    : 'text' enclosedExpr ;
+    : 'text' enclosedExpr
+    ;
 
 compCommentConstructor
-    : 'comment' enclosedExpr ;
+    : 'comment' enclosedExpr
+    ;
 
 compPIConstructor :
-        'processing-instruction' (ncName | ('{' expr '}')) enclosedExpr ;
+        'processing-instruction' (ncName | ('{' expr '}')) enclosedExpr
+    ;
 
 functionItemExpr
-    : namedFunctionRef | inlineFunctionExpr ;
+    : namedFunctionRef | inlineFunctionExpr
+    ;
 
 namedFunctionRef
-    : eqName '#' IntegerLiteral  /* xgc: reserved-function-names */ ;
+    : eqName '#' IntegerLiteral  /* xgc: reserved-function-names */
+    ;
 
 inlineFunctionExpr :
         annotation* 'function' '(' paramList? ')'
-        ('as' sequenceType)? functionBody ;
+        ('as' sequenceType)? functionBody
+    ;
 
 mapConstructor :
-        'map' '{' (mapConstructorEntry (',' mapConstructorEntry)*)? '}' ;
+        'map' '{' (mapConstructorEntry (',' mapConstructorEntry)*)? '}'
+    ;
 
-mapConstructorEntry : mapKeyExpr ':' mapValueExpr ;
+mapConstructorEntry : mapKeyExpr ':' mapValueExpr
+    ;
 
 mapKeyExpr
-    : exprSingle ;
+    : exprSingle
+    ;
 
 mapValueExpr
-    : exprSingle ;
+    : exprSingle
+    ;
 
 arrayConstructor
-    : squareArrayConstructor | curlyArrayConstructor ;
+    : squareArrayConstructor | curlyArrayConstructor
+    ;
 
 squareArrayConstructor
-    : '[' (exprSingle (',' exprSingle)*)? ']' ;
+    : '[' (exprSingle (',' exprSingle)*)? ']'
+    ;
 
 curlyArrayConstructor
-    : 'array' '{' expr? '}' ;
+    : 'array' '{' expr? '}'
+    ;
 
 stringConstructor
-    : '``[' stringConstructorContent ']``'  /* ws: explicit */ ;
+    : '``[' stringConstructorContent ']``'  /* ws: explicit */
+    ;
 
 stringConstructorContent
     :
         stringConstructorChars
         (stringConstructorInterpolation stringConstructorChars)*
-        /* ws: explicit */ ;
+        /* ws: explicit */
+    ;
 // stringConstructorChars :
 //         (Char* - (Char* ('`{' | ']``') Char*))  /* ws: explicit */ ;  // This is the original rule
 
 stringConstructorChars
-    : (Char* ~ StringConstructorCharsInternal)  /* ws: explicit */ ;
+    : (Char* ~ StringConstructorCharsInternal)  /* ws: explicit */
+    ;
 
 stringConstructorInterpolation
-    : '`{' expr? '}`' ;
+    : '`{' expr? '}`'
+    ;
 
 unaryLookup
-    : '?' keySpecifier ;
+    : '?' keySpecifier
+    ;
 
 singleType
-    : simpleTypeName '?'? ;
+    : simpleTypeName '?'?
+    ;
 
 typeDeclaration
-    : 'as' sequenceType ;
+    : 'as' sequenceType
+    ;
 
 sequenceType
-    : ('empty-sequence' '(' ')') | (itemType occurrenceIndicator?) ;
+    : ('empty-sequence' '(' ')') | (itemType occurrenceIndicator?)
+    ;
 
 occurrenceIndicator
-    : '?' | '*' | '+'  /* xgc: occurrence-indicators */ ;
+    : '?' | '*' | '+'  /* xgc: occurrence-indicators */
+    ;
 
 itemType
     : kindTest
@@ -669,10 +771,12 @@ itemType
     | arrayTest
     | atomicOrUnionType
     | parenthesizedItemType
+
     ;
 
 atomicOrUnionType
     : eqName
+
     ;
 
 kindTest
@@ -685,73 +789,96 @@ kindTest
     | CommentTest
     | TextTest
     | NamespaceNodeTest
-    | AnyKindTest ;
+    | AnyKindTest
+    ;
 
 documentTest
-    : 'document-node' '(' (elementTest | schemaElementTest)? ')' ;
+    : 'document-node' '(' (elementTest | schemaElementTest)? ')'
+    ;
 
 piTest
-    : 'processing-instruction' '(' (ncName | StringLiteral)? ')' ;
+    : 'processing-instruction' '(' (ncName | StringLiteral)? ')'
+    ;
 
 attributeTest
-    : 'attribute' '(' (attribNameOrWildcard (',' typeName)?)? ')' ;
+    : 'attribute' '(' (attribNameOrWildcard (',' typeName)?)? ')'
+    ;
 
 attribNameOrWildcard
-    : attributeName | '*' ;
+    : attributeName | '*'
+    ;
 
 schemaAttributeTest
-    : 'schema-attribute' '(' attributeDeclaration ')' ;
+    : 'schema-attribute' '(' attributeDeclaration ')'
+    ;
 
 attributeDeclaration
-    : attributeName ;
+    : attributeName
+    ;
 
 elementTest
-    : 'element' '(' (elementNameOrWildcard (',' typeName '?'?)?)? ')' ;
+    : 'element' '(' (elementNameOrWildcard (',' typeName '?'?)?)? ')'
+    ;
 
 elementNameOrWildcard
-    : elementName | '*' ;
+    : elementName | '*'
+    ;
 
 schemaElementTest
-    : 'schema-element' '(' elementDeclaration ')' ;
+    : 'schema-element' '(' elementDeclaration ')'
+    ;
 
 elementDeclaration
-    : elementName ;
+    : elementName
+    ;
 
 attributeName
-    : eqName ;
+    : eqName
+    ;
 
 elementName
-    : eqName ;
+    : eqName
+    ;
 
 simpleTypeName
-    : typeName ;
+    : typeName
+    ;
 
 typeName
-    : eqName ;
+    : eqName
+    ;
 
 functionTest
-    : annotation* (AnyFunctionTest | typedFunctionTest) ;
+    : annotation* (AnyFunctionTest | typedFunctionTest)
+    ;
 
 typedFunctionTest
-    : 'function' '(' (sequenceType (',' sequenceType)*)? ')' 'as' sequenceType ;
+    : 'function' '(' (sequenceType (',' sequenceType)*)? ')' 'as' sequenceType
+    ;
 
 mapTest
-    : AnyMapTest | typedMapTest ;
+    : AnyMapTest | typedMapTest
+    ;
 
 typedMapTest
-    : 'map' '(' atomicOrUnionType ',' sequenceType ')' ;
+    : 'map' '(' atomicOrUnionType ',' sequenceType ')'
+    ;
 
 arrayTest
-    : AnyArrayTest | typedArrayTest ;
+    : AnyArrayTest | typedArrayTest
+    ;
 
 typedArrayTest
-    : 'array' '(' sequenceType ')' ;
+    : 'array' '(' sequenceType ')'
+    ;
 
 parenthesizedItemType
-    : '(' itemType ')' ;
+    : '(' itemType ')'
+    ;
 
 uriLiteral
-    : StringLiteral ;
+    : StringLiteral
+    ;
 
 eqName
     : qName
@@ -760,9 +887,11 @@ eqName
 
 // Terminals:
 uriQualifiedName
-    : bracedURILiteral ncName /* ws: explicit */ ;
+    : bracedURILiteral ncName /* ws: explicit */
+    ;
 
 bracedURILiteral
     : 'Q' '{' (PredefinedEntityRef | CharRef | BracedURILiteralInternal)* '}'
-        /* ws: explicit */ ;
+        /* ws: explicit */
+    ;
 

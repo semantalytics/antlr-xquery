@@ -10,11 +10,12 @@ IntegerLiteral
     ;
 
 DecimalLiteral
-    : '.' Digits | Digits '.' [0-9]*
+    : '.' Digits
+    | Digits '.' [0-9]*
     ;
 
 DoubleLiteral
-    :('.' Digits | Digits ('.' [0-9]*)?) [eE] [+-]? Digits
+    : ( '.' Digits | Digits ( '.' [0-9]*)?) [eE] [+-]? Digits
     ;
 
 fragment
@@ -29,7 +30,8 @@ PredefinedEntityRef
 
 // CharRef is additionally limited by http://www.w3.org/TR/REC-xml/#NT-Char,
 CharRef
-    : '&#' [0-9]+ ';' | '&#x' [0-9a-fA-F]+ ';'
+    : '&#' [0-9]+ ';'
+    | '&#x' [0-9a-fA-F]+ ';'
     ;
 
 // Escapes are handled as two Quot or two Apos tokens, to avoid maximal
@@ -403,83 +405,122 @@ KW_MOD
     ;
 
 KW_MODULE
-    : 'module';
+    : 'module'
+    ;
 KW_NAMESPACE
-    : 'namespace';
+    : 'namespace'
+    ;
 KW_NE
-    : 'ne';
+    : 'ne'
+    ;
 KW_NO_INHERIT
-    : 'no-inherit';
+    : 'no-inherit'
+    ;
 KW_NO_PRESERVE
-    :        'no-preserve';
+    : 'no-preserve'
+    ;
 KW_NODE
-    :               'node';
+    : 'node'
+    ;
 KW_OF
-    :                 'of';
+    : 'of'
+    ;
 KW_OPTION
-    :             'option';
+    : 'option'
+    ;
 KW_OR
-    :                 'or';
+    : 'or'
+    ;
 KW_ORDER
-    :              'order';
+    : 'order'
+    ;
 KW_ORDERED
-    :            'ordered';
+    : 'ordered'
+    ;
 KW_ORDERING
-    :           'ordering';
+    : 'ordering'
+    ;
 KW_PARENT
-    :             'parent';
+    : 'parent'
+    ;
 KW_PRECEDING
-    :          'preceding';
+    : 'preceding'
+    ;
 KW_PRECEDING_SIBLING
-    :  'preceding-sibling';
+    : 'preceding-sibling'
+    ;
 KW_PRESERVE
-    :           'preserve';
+    : 'preserve'
+    ;
 KW_PI
-    :                 'processing-instruction';
+    : 'processing-instruction'
+    ;
 KW_RETURN
-    :             'return';
+    : 'return'
+    ;
 KW_SATISFIES
-    :          'satisfies';
+    : 'satisfies'
+    ;
 KW_SCHEMA
-    :             'schema';
+    : 'schema'
+    ;
 KW_SCHEMA_ATTR
-    :        'schema-attribute';
+    : 'schema-attribute'
+    ;
 KW_SCHEMA_ELEM
-    :        'schema-element';
+    : 'schema-element'
+    ;
 KW_SELF
-    :               'self';
+    : 'self'
+    ;
 KW_SOME
-    :               'some';
+    : 'some'
+    ;
 KW_STABLE
-    :             'stable';
+    : 'stable'
+    ;
 KW_STRICT
-    :             'strict';
+    : 'strict'
+    ;
 KW_STRIP
-    :              'strip';
+    : 'strip'
+    ;
 KW_TEXT
-    :               'text';
+    : 'text'
+    ;
 KW_THEN
-    :               'then';
+    : 'then'
+    ;
 KW_TO
-    :                 'to';
+    : 'to'
+    ;
 KW_TREAT
-    :              'treat';
+    : 'treat'
+    ;
 KW_TYPESWITCH
-    :         'typeswitch';
+    : 'typeswitch'
+    ;
 KW_UNION
-    :              'union';
+    : 'union'
+    ;
 KW_UNORDERED
-    :          'unordered';
+    : 'unordered'
+    ;
 KW_VALIDATE
-    :           'validate';
+    : 'validate'
+    ;
 KW_VARIABLE
-    :           'variable';
+    : 'variable'
+    ;
 KW_VERSION
-    :            'version';
+    : 'version'
+    ;
 KW_WHERE
-    :              'where';
+    : 'where'
+    ;
 KW_XQUERY
-    :             'xquery';
+    : 'xquery'
+    ;
 
 // NAMES
 
